@@ -1,0 +1,110 @@
+/**************************************************
+
+1 - General element styles
+2 - Login and Signup page styles
+3 - Homepage styles
+4 - Datatable styles
+
+
+***************************************************/
+
+/* 1 - General element styles */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+form input {
+    display: block;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    height: 35px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+form label {
+    font-size: 16px;
+    color: grey;
+    display: block;
+}
+
+/* 2 - Login and Signup page styles */
+
+.helptext {
+    font-size: 12px;
+    color: #8a8787;
+    display: block;
+    margin-top: -20px;
+    margin-bottom: 10px;
+}
+
+.login-signup {
+    height: 100%;
+    display: block;
+}
+
+.login-signup .left {
+    background-image: linear-gradient(180deg, rgba(29, 70, 163, 1) 5.6%, rgba(17, 196, 238, 1) 109.7%);
+    height: 100vh;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.login-signup .left h6 {
+    font-size: 30px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+
+.login-signup .right {
+    height: 100vh;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    background: #fff;
+}
+
+.register-forgot {
+    line-height: 1.2;
+    font-size: 14px;
+    padding-top: 26px;
+}
+
+.register-forgot a:hover {
+    text-decoration: none;
+}
+
+.login-form {
+    width: 350px;
+    margin: 0 auto;
+}
+
+
+/* 3 - Homepage styles */
+
+
+
+/* 4 - Datatable styles */
+
+#datatable {
+    width: 100%;
+}
+
+#datatable .ellipsis {
+    display: none;
+}
+
+#datatable tr:hover .ellipsis {
+    display: block;
+}

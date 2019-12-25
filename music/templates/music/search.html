@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Search</title>
+{% endblock %}
+
+{% block content %}
+
+<!-- Create New Playlist Modal Window -->
+
+<div class="modal fade" id="createPlaylistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Playlist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createPlaylistForm" action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ user.get_username }}" name="username">
+                    <div class="form-group">
+                        <label class="input-label">Playlist Name</label>
+                        <input type="text" class="form-control" name="playlistname" required>
+                    </div>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add to Playlist Modal -->
+
+<div class="modal fade" id="addToPlaylistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add to Playlist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" method="POST" id="addToPlaylistForm">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" id="trackID" name="trackid">
+                    <select class="form-control" id="playlistid" required>
+                        <option selected disabled>Select Playlist</option>
+                        {% for playlist in user_playlists %}
+                            <option value="{{ playlist.id }}">{{ playlist.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <table id="datatable" class="table table-hover">
+        <thead>
+            <th>Preview</th>
+            <th></th>
+            <th>Artist</th>
+            <th>Song</th>
+            <th>Album</th>
+            <th>Duration</th>
+            <th>Popularity</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for row in results.data %}
+
+            <tr>
+                <td><img src="{{ row.album.cover_small }}" height="35"></td>
+                <td><i class="far fa-heart"></i></td>
+                <td>{{ row.artist.name }}</td>
+                <td>{{ row.title_short }}</td>
+                <td>{{ row.album.title }}</td>
+                <td>{{ row.duration }}</td>
+                <td>{{ row.rank }}</td>
+                <td class="ellipsis">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-light" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <h6 class="dropdown-header">Details about:</h6>
+                            <a class="dropdown-item" href="{% url 'music:track' row.id %}" target="_blank">Song</a>
+                            <a class="dropdown-item" href="{% url 'music:album' row.album.id %}"
+                                target="_blank">Album</a>
+                            <a class="dropdown-item" href="{% url 'music:artist' row.artist.id %}"
+                                target="_blank">Artist</a>
+                            <h6 class="dropdown-header">Playlists</h6>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createPlaylistModal">Create</a>
+                            <a class="dropdown-item" href="#" id="addToPlaylistBtn" data-id="{{ row.id }}" data-toggle="modal" data-target="#addToPlaylistModal">Add to</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

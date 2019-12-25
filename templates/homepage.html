@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Homepage</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <form class="homepage-search-form" action="/music/search" method="GET">
+        <input type="text" name="search" placeholder="Enter song, album, artist...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+</div>
+{% endblock %}

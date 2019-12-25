@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Playlists</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1>Playlists Music</h1>
+
+    {% if data|length > 0 %}
+        <table id="datatable">
+            <thead>
+                <th>ID</th>
+                <th>Playlist Name</th>
+                <th></th>
+              </thead>
+              <tbody>
+                  {% for playlist in data %}
+                  <tr>
+                      <td>{{ playlist.id }}</td>
+                      <td>{{ playlist.name }}</td>
+                      <td><a href="{% url 'music:playlist' playlist.id %}">Go</a></td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+        </table>
+    {% else %}
+        <p>No playlists found</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}
