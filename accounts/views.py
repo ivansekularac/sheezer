@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+from .forms import UserUpdateForm, ProfileUpdateForm
 
 # Creating view function for sign up page
 def signup_view(request):
@@ -51,3 +52,29 @@ def logout_view(request):
         logout(request)
         # Redirect to login page after success
         return redirect('accounts:login')
+
+
+# Creating User Profile view for Profile page
+def profile_view(request):
+    # Check if request is POST method
+    if request.method == "POST":
+        # Instantiate two forms we created and imported from forms.py
+        user_form = UserUpdateForm(request.POST, instance = request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance = request.user.profile)
+        # If both of the forms are valid perform save and redirect to profile url
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('accounts:profile')
+    else:
+        # Else we just create new forms
+        user_form = UserUpdateForm(instance = request.user)
+        profile_form = ProfileUpdateForm(instance = request.user.profile)
+
+    # Save forms to dictionary and send them to template
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    # Render template and return it
+    return render(request, 'accounts/profile.html', context)

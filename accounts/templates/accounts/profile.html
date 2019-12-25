@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1>Profile</h1>
+    <h4>{{ user.username }}</h4>
+    <img src="{{ user.profile.image.url }}" alt="" height="200" class="rounded-circle">
+    <form method="POST" enctype="multipart/form-data" class="col-md-3">
+      {% csrf_token %}
+      {{ user_form }}
+      {{ profile_form }}
+      <button class="btn btn-primary" type="submit">Save changes</button>
+    </form>
+</div>
+
+{% endblock %}

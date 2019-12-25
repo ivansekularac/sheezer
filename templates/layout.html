@@ -8,7 +8,7 @@
         {% endblock %}
         <!-- Bootstrap CSS  -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <!-- Custom CSS  -->        
+        <!-- Custom CSS  -->
         <link rel="stylesheet" href="{% static 'styles.css' %}">
         <!-- Google Font  -->
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,800&display=swap" rel="stylesheet">
@@ -25,26 +25,26 @@
                 <nav class="my-2 my-md-0 mr-md-3">
                     <a class="p-2" href="{% url 'music:playlists' %}"><i class="fas fa-music"></i> My Playlists</a>
                     <a class="p-2" href="{% url 'music:favorites' %}"><i class="fas fa-heart"></i> My Favorites</a>
-                    <a class="p-2" href="{% url 'music:browse' %}"><i class="fas fa-layer-group"></i> Browse</a>        
+                    <a class="p-2" href="{% url 'music:browse' %}"><i class="fas fa-layer-group"></i> Browse</a>
                 </nav>
                 <div class="btn-group">
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-circle"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">            
-                    <button class="dropdown-item" type="button"><i class="fas fa-cog"></i> My Settings</button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="fas fa-user"></i> My Profile</a>
                     <form action="{% url 'accounts:logout' %}" method="POST">
                         {% csrf_token %}
                         <button class="dropdown-item" type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </form>
-                    
+
                     </div>
                 </div>
                 {% else %}
                     <a class="btn btn-primary mr-2" href="{% url 'accounts:login' %}">Login</a>
                     <a class="btn btn-secondary" href="{% url 'accounts:signup' %}">Signup</a>
                 {% endif %}
-            </div>    
+            </div>
         </header>
        <div class="wrapper">
             {% if user.is_authenticated %}
