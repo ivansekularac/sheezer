@@ -7,6 +7,11 @@
 {% block content %}
 
 <div class="container-fluid">
+    <audio id="audio-player" preload="auto">
+      <source src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <h1>Playlist</h1>
 
     {% if data|length > 0 %}
@@ -24,7 +29,10 @@
                 {% for song in data %}
 
                 <tr>
-                    <td><img src="{{ song.album.cover_small }}" height="35"></td>
+                    <td>
+                      <img src="{{ song.album.cover_small }}" height="35">
+                      <span class="btn btn-primary play-button" data-url="{{ song.preview }}"><i class="fas fa-play-circle"></i></span>
+                    </td>
                     <td>{{ song.artist.name }}</td>
                     <td>{{ song.title_short }}</td>
                     <td>{{ song.album.title }}</td>

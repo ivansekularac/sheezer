@@ -25,7 +25,7 @@ $(document).on("submit", "#createPlaylistForm", function(e) {
     $.ajax({
         type: 'POST',
         url: '/music/search',
-        data: {            
+        data: {
             playlistname: $('input[name=playlistname]').val(),
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
         },
@@ -39,7 +39,7 @@ $(document).on("submit", "#createPlaylistForm", function(e) {
                 button: false
             });
             window.setTimeout(function(){location.reload()},500)
-            
+
         }
     });
 });
@@ -50,16 +50,27 @@ $(document).on("submit", "#addToPlaylistForm", function(e) {
     $.ajax({
         type: 'POST',
         url: '/music/search',
-        data: {            
+        data: {
             playlistid: $('#playlistid').val(),
             trackid: $('input[name=trackid]').val(),
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
         },
-        success: function(){ 
+        success: function(){
             $("#addToPlaylistModal").find('form').trigger('reset'); // Reset form
             $("#addToPlaylistModal").modal("hide"); // Hide modal window
-            swal("Song added to Playlist!", "Good Job! :)", "success"); // Sweet Alert Message            
+            swal("Song added to Playlist!", "Good Job! :)", "success"); // Sweet Alert Message
         }
     });
 });
 
+// Audio Preview Player
+
+$(document).ready(function() {
+    $(".play-button").click(function(){
+        player = $("#audio-player");
+        url = $(this).data('url');
+        $("#audio-player source").attr('src', url);
+        player.trigger('load');
+        player.trigger('play');
+    });
+});
