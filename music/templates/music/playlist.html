@@ -11,8 +11,7 @@
       <source src="" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
-    <h1>Playlist</h1>
+    <h1>Playlist</h1>    
 
     {% if data|length > 0 %}
         <table id="datatable" class="table table-hover">
@@ -31,14 +30,19 @@
                 <tr>
                     <td>
                       <img src="{{ song.album.cover_small }}" height="35">
-                      <span class="btn btn-primary play-button" data-url="{{ song.preview }}"><i class="fas fa-play-circle"></i></span>
+                      <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ song.preview }}"></span>
                     </td>
                     <td>{{ song.artist.name }}</td>
                     <td>{{ song.title_short }}</td>
                     <td>{{ song.album.title }}</td>
                     <td>{{ song.duration }}</td>
                     <td>{{ song.rank }}</td>
-                    <td class="ellipsis">Remove</td>
+                    <td class="ellipsis">
+                        <form action="" method="POST">
+                            <input type="hidden" value="{{ song.id }}" name="song_id" />
+                            <input type="submit" value="Remove" />
+                        </form>
+                    </td>
                 </tr>
 
                 {% endfor %}

@@ -49,14 +49,14 @@ def search_view(request):
         response = requests.request("GET", url, headers=headers, params=querystring).json()
         data.update(response)
 
-        # We need all results since there is 25 per call, we iterate until we got all of them in data dict        
+        # We need all results since there is 25 per call, we iterate until we got all of them in data dict
         while True:
             if len(response['data']) == 0 or 'next' not in response:
                 break
-            
+
             url_next = response['next']
             response = requests.request("GET", url_next).json()
-            
+
             for k in response['data']:
                 data['data'].append(k)
 
@@ -74,7 +74,7 @@ def search_view(request):
             playlist_id = request.POST.get('playlistid')
             # Find object with that id and save it
             playlist_obj = Playlist.objects.get(id = playlist_id)
-            playlist_obj.save() 
+            playlist_obj.save()
             # Get track ID and create Song object
             track_id = request.POST.get('trackid')
             # We need to check if we already have track id in database model. if we don't save
@@ -86,14 +86,14 @@ def search_view(request):
 
     # Fetch all User's Playlists for populating Add To feature
     user_playlists = Playlist.objects.filter(created_by = request.user)
-            
+
     # Render template and pass the data we got so it can be used
     return render(request, 'music/search.html', { 'results': data, 'user_playlists': user_playlists })
 
 # Creating single view track by taking GET param as Track ID
 def track_view(request, id):
 
-    url = "https://deezerdevs-deezer.p.rapidapi.com/track/" + str(id)    
+    url = "https://deezerdevs-deezer.p.rapidapi.com/track/" + str(id)
     response = requests.request("GET", url, headers=headers).json()
 
     return render(request, 'music/track.html', { 'data': response })
@@ -101,7 +101,7 @@ def track_view(request, id):
 # Creating album view by taking GET param as Album ID
 def album_view(request, id):
 
-    url = "https://deezerdevs-deezer.p.rapidapi.com/album/" + str(id)   
+    url = "https://deezerdevs-deezer.p.rapidapi.com/album/" + str(id)
     response = requests.request("GET", url, headers=headers).json()
 
     return render(request, 'music/album.html', { 'data': response })
@@ -109,7 +109,7 @@ def album_view(request, id):
 # Creating album view by taking GET param as Album ID
 def artist_view(request, id):
 
-    url = "https://deezerdevs-deezer.p.rapidapi.com/artist/" + str(id)    
+    url = "https://deezerdevs-deezer.p.rapidapi.com/artist/" + str(id)
     response = requests.request("GET", url, headers=headers).json()
 
     return render(request, 'music/artist.html', { 'data': response })
@@ -126,11 +126,3 @@ def playlist_view(request, id):
         data.append(response)
 
     return render(request, 'music/playlist.html', { 'data': data })
-
-
-
-    
-
-    
-
-

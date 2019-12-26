@@ -63,14 +63,33 @@ $(document).on("submit", "#addToPlaylistForm", function(e) {
     });
 });
 
-// Audio Preview Player
+// Audio Player for Tabelar Views
 
-$(document).ready(function() {
-    $(".play-button").click(function(){
+$(document).ready(function(){
+
+    $('.play-button').on("click", function(){
         player = $("#audio-player");
         url = $(this).data('url');
+
+        $(".play-button").removeClass('fa-pause-circle').addClass("fa-play-circle");
+
         $("#audio-player source").attr('src', url);
-        player.trigger('load');
-        player.trigger('play');
+
+        if ($(this).hasClass('fa-play-circle')) {
+            $(this).removeClass('fa-play-circle');
+            $(this).addClass('fa-pause-circle');
+            player.trigger('load');
+            player.trigger('play');
+        } else {
+            $(this).removeClass('fa-pause-circle');
+            $(this).addClass('fa-play-circle');
+            player.trigger('pause');
+        }
+        
     });
+
+    $('#audio-player').on('ended', function() {
+       $(".play-button").removeClass('fa-pause-circle').addClass("fa-play-circle");
+    });
+
 });
