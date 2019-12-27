@@ -11,7 +11,12 @@
       <source src="" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <h1>Playlist</h1>    
+    <h1>Playlist</h1>
+    {% if messages %}
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
     {% if data|length > 0 %}
         <table id="datatable" class="table table-hover">
@@ -39,6 +44,7 @@
                     <td>{{ song.rank }}</td>
                     <td class="ellipsis">
                         <form action="" method="POST">
+                            {% csrf_token %}
                             <input type="hidden" value="{{ song.id }}" name="song_id" />
                             <input type="submit" value="Remove" />
                         </form>

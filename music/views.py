@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 from music.models import Playlist, Song
 import requests
 import json
@@ -23,7 +24,7 @@ def favorites_view(request):
     # Check if Playlist for My Favorite exists and if not create one
     my_favorites = Playlist.objects.get(name = 'My Favorites', created_by = request.user)
     # Fetch all TrackID's
-    songs = Song.objects.filter(playlists = my_favorites.id)
+    songs = my_favorites.songs.all()
     # For each of the ID's we need to make API Call and store that data in list as dict
     for song in songs:
         url = "https://deezerdevs-deezer.p.rapidapi.com/track/" + str(song.api_id)
@@ -67,6 +68,7 @@ def search_view(request):
             user = request.user
             playlist_name = request.POST.get('playlistname')
             Playlist.objects.create(name = playlist_name, created_by = user)
+            messages.success(request, 'Playlist has been created successfully!')
         elif 'trackid' in request.POST:
             # If user wants to add a track to existing playlist
             user = request.user
@@ -76,13 +78,11 @@ def search_view(request):
             playlist_obj = Playlist.objects.get(id = playlist_id)
             playlist_obj.save()
             # Get track ID and create Song object
-            track_id = request.POST.get('trackid')
-            # We need to check if we already have track id in database model. if we don't save
-            track_obj = Song(api_id = track_id)
-            track_obj.save()
+            song_id = request.POST.get('trackid')
+            song_obj = Song(api_id = song_id)
+            song_obj.save()
             # Add Song object to Playlist object
-            track_obj.playlists.add(playlist_obj)
-
+            playlist_obj.songs.add(song_obj)
 
     # Fetch all User's Playlists for populating Add To feature
     user_playlists = Playlist.objects.filter(created_by = request.user)
@@ -116,8 +116,19 @@ def artist_view(request, id):
 
 # Creating view for user playlist overview
 def playlist_view(request, id):
-    # Fetch all TrackID's
-    songs = Song.objects.filter(playlists = id)
+    # Get Playlist with id passed
+    playlist = Playlist.objects.get(id = id)
+
+    # If there is POST request that means we are sending data for removing song from playlist
+    if request.method == "POST":
+        if 'song_id' in request.POST:
+            song_id = request.POST.get('song_id')
+            # Use playlist and remove song from it
+            song_for_removal = playlist.songs.get(api_id = song_id)
+            song_for_removal.delete()            
+
+    # Fetch all Songs from that Playlist
+    songs = playlist.songs.all()
     # For each of the ID's we need to make API Call and store that data in list as dict
     data = []
     for song in songs:

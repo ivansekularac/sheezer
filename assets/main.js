@@ -17,6 +17,10 @@ $('#addToPlaylistModal').on('hidden.bs.modal', function() {
     $(this).find('form').trigger('reset');
 });
 
+// Alert auto close after delay
+$(document).ready(function(){
+    $('.alert').delay(2500).slideUp();
+});
 // AJAX form submission for creating and adding tracks to Playlists
 
 $(document).on("submit", "#createPlaylistForm", function(e) {
@@ -39,7 +43,6 @@ $(document).on("submit", "#createPlaylistForm", function(e) {
                 button: false
             });
             window.setTimeout(function(){location.reload()},500)
-
         }
     });
 });
@@ -71,8 +74,7 @@ $(document).ready(function(){
         player = $("#audio-player");
         url = $(this).data('url');
 
-        $(".play-button").removeClass('fa-pause-circle').addClass("fa-play-circle");
-
+        // $(".play-button").removeClass('fa-pause-circle').addClass("fa-play-circle");
         $("#audio-player source").attr('src', url);
 
         if ($(this).hasClass('fa-play-circle')) {
@@ -85,7 +87,7 @@ $(document).ready(function(){
             $(this).addClass('fa-play-circle');
             player.trigger('pause');
         }
-        
+
     });
 
     $('#audio-player').on('ended', function() {
