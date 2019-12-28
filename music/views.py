@@ -125,7 +125,7 @@ def playlist_view(request, id):
             song_id = request.POST.get('song_id')
             # Use playlist and remove song from it
             song_for_removal = playlist.songs.get(api_id = song_id)
-            song_for_removal.delete()            
+            song_for_removal.delete()
 
     # Fetch all Songs from that Playlist
     songs = playlist.songs.all()
@@ -137,3 +137,20 @@ def playlist_view(request, id):
         data.append(response)
 
     return render(request, 'music/playlist.html', { 'data': data })
+
+
+# Creating view for favoriting Songs
+def favorited_view(request):
+    if request.method == "POST":
+        # Save sent id
+        song_id = request.POST.get('song_id')
+        # Create song object
+        song_obj = Song.objects.create(api_id = song_id)
+        song_obj.save()
+        # Add this song to users My Favorite Playlists
+        playlist_obj = Playlist.objects.get(name = 'My Favorites', created_by = request.user)
+        playlist_obj.save()
+        # Add song to this playlists
+        playlist_obj.songs.add(song_obj)
+
+    return HttpResponse('Favorited! <3') 

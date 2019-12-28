@@ -68,7 +68,7 @@
 
 
 <div class="container-fluid">
-    
+
     <table id="datatable" class="table table-hover">
         <thead>
             <th>Preview</th>
@@ -85,7 +85,9 @@
 
             <tr>
                 <td><img src="{{ row.album.cover_small }}" height="35"></td>
-                <td><i class="far fa-heart"></i></td>
+                <td>
+                    <span class="favorite-btn far fa-heart" data-id="{{ row.id }}" data-token="{{ csrf_token }}"></span>                    
+                </td>
                 <td>{{ row.artist.name }}</td>
                 <td>{{ row.title_short }}</td>
                 <td>{{ row.album.title }}</td>

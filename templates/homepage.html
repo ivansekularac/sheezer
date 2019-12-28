@@ -5,12 +5,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-
-    <form class="homepage-search-form" action="/music/search" method="GET">
-        <input type="text" name="search" placeholder="Enter song, album, artist...">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-
+<div class="homepage-container">
+<h1>Welcome, {{ user.username }}</h1>
+<h6>You bring the passion. We bring the music.</h6>
 </div>
 {% endblock %}
