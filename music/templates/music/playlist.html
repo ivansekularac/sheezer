@@ -34,7 +34,7 @@
 
                 <tr>
                     <td>
-                      <img src="{{ song.album.cover_small }}" height="35">
+                      <img src="{{ song.album.cover_small }}" class="song-image">
                       <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ song.preview }}"></span>
                     </td>
                     <td>{{ song.artist.name }}</td>
@@ -46,7 +46,7 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" value="{{ song.id }}" name="song_id" />
-                            <input type="submit" value="Remove" />
+                            <button type="submit" class="btn-remove shadow"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>

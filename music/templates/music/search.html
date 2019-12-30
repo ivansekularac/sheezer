@@ -68,6 +68,10 @@
 
 
 <div class="container-fluid">
+    <audio id="audio-player" preload="auto">
+      <source src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <table id="datatable" class="table table-hover">
         <thead>
@@ -84,9 +88,12 @@
             {% for row in results.data %}
 
             <tr>
-                <td><img src="{{ row.album.cover_small }}" height="35"></td>
                 <td>
-                    <span class="favorite-btn far fa-heart" data-id="{{ row.id }}" data-token="{{ csrf_token }}"></span>                    
+                  <img src="{{ row.album.cover_small }}" class="song-image">
+                  <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ row.preview }}"></span>
+                </td>
+                <td>
+                    <span class="favorite-btn far fa-heart" data-id="{{ row.id }}" data-token="{{ csrf_token }}"></span>
                 </td>
                 <td>{{ row.artist.name }}</td>
                 <td>{{ row.title_short }}</td>
@@ -95,7 +102,7 @@
                 <td>{{ row.rank }}</td>
                 <td class="ellipsis">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light" data-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="btn-remove shadow" data-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-ellipsis-h"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">

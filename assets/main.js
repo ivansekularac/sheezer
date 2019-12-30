@@ -3,6 +3,12 @@ $(document).ready(function() {
     $('#datatable').DataTable();
 });
 
+// Main Loader
+window.addEventListener("load", function () {
+    const loader = document.querySelector(".loader");
+    loader.className += " hidden";
+});
+
 // Passing data-id from as Track ID that will be used for data insert
 
 $(document).on("click", "#addToPlaylistBtn", function() {
@@ -106,7 +112,7 @@ $(document).ready(function(){
             url: '/music/track/favorited',
             data: {
                 song_id: $(this).data('id'),
-                csrfmiddlewaretoken: $(this).data('token')                
+                csrfmiddlewaretoken: $(this).data('token')
             },
             success: function(){
                 console.log('Yey!');
