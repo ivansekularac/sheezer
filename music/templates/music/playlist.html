@@ -41,7 +41,7 @@
                     <td>{{ song.title_short }}</td>
                     <td>{{ song.album.title }}</td>
                     <td>{{ song.duration }}</td>
-                    <td>{{ song.rank }}</td>
+                    <td>{{ song.rank }} / 10</td>
                     <td class="ellipsis">
                         <form action="" method="POST">
                             {% csrf_token %}

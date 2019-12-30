@@ -86,20 +86,23 @@
         </thead>
         <tbody>
             {% for row in results.data %}
-
             <tr>
                 <td>
                   <img src="{{ row.album.cover_small }}" class="song-image">
                   <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ row.preview }}"></span>
                 </td>
                 <td>
+                    {% if row.id in favorite_songs %}
+                    <span class="favorite-btn fas fa-heart" data-id="{{ row.id }}" data-token="{{ csrf_token }}"></span>
+                    {% else %}
                     <span class="favorite-btn far fa-heart" data-id="{{ row.id }}" data-token="{{ csrf_token }}"></span>
+                    {% endif %}
                 </td>
                 <td>{{ row.artist.name }}</td>
                 <td>{{ row.title_short }}</td>
                 <td>{{ row.album.title }}</td>
                 <td>{{ row.duration }}</td>
-                <td>{{ row.rank }}</td>
+                <td>{{ row.rank }} / 10</td>
                 <td class="ellipsis">
                     <div class="btn-group">
                         <button type="button" class="btn-remove shadow" data-toggle="dropdown" aria-expanded="false">
