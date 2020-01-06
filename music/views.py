@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.db.models import Count
 from music.models import Playlist, Song
 import requests
 import json
@@ -24,7 +25,14 @@ def popularityCalc(value):
 # Creating a View for Playlists Page
 def playlists_view(request):
     user = request.user
-    playlists = Playlist.objects.filter(created_by = user)
+    # We need all playlists created by this user and song counts for which we user annotate func
+    playlists = Playlist.objects.filter(created_by = user).annotate(songs_count = Count('songs'))
+
+    # If there is a POST method request we create new playlists
+    if 'playlistname' in request.POST:
+        playlist_name = request.POST.get('playlistname')
+        Playlist.objects.create(name = playlist_name, created_by = user)
+
     return render(request, 'music/playlists.html', { 'data' : playlists })
 
 # Creating a View for Favorites Page
@@ -43,8 +51,8 @@ def favorites_view(request):
     return render(request, 'music/favorites.html', { 'data': data })
 
 # Creating a View for Browse Page
-def browse_view(request):
-    return render(request, 'music/browse.html')
+def explore_view(request):
+    return render(request, 'music/explore.html')
 
 # Creating a View for Search Page
 def search_view(request):
@@ -71,9 +79,9 @@ def search_view(request):
                 data['data'].append(k)
 
     # Perform duration and popularity calc for each song
-    for song in data['data']:
-        song['duration'] = durationCalc(song['duration'])
-        song['rank'] = popularityCalc(song['rank'])
+    # for song in data['data']:
+    #     song['duration'] = durationCalc(song['duration'])
+    #     song['rank'] = popularityCalc(song['rank'])
 
 
     # Creating or adding tracks to Playlists

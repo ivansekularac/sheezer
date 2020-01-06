@@ -36,7 +36,8 @@
                 {% if user.is_authenticated %}
                 <nav class="my-2 my-md-0 mr-md-3">
                     <a class="p-2" href="{% url 'music:playlists' %}"><i class="fas fa-music"></i> My Playlists</a>
-                    <a class="p-2" href="{% url 'music:browse' %}"><i class="fas fa-layer-group"></i> Browse</a>
+                    <a class="p-2" href="{% url 'music:favorites' %}"><i class="fas fa-heart"></i> My Favorites</a>
+                    <a class="p-2" href="{% url 'music:explore' %}"><i class="fas fa-layer-group"></i> Explore</a>
                 </nav>
                 <div class="btn-group nav-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
