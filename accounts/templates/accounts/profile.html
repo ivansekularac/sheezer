@@ -6,16 +6,56 @@
 
 {% block content %}
 
-<div class="container-fluid">
-    <h1>Profile</h1>
-    <h4>{{ user.username }}</h4>
-    <img src="{{ user.profile.image.url }}" alt="" height="200" class="rounded-circle">
-    <form method="POST" enctype="multipart/form-data" class="col-md-3">
-      {% csrf_token %}
-      {{ user_form }}
-      {{ profile_form }}
-      <button class="btn btn-primary" type="submit">Save changes</button>
-    </form>
+<div class="container">
+  <div class="page-header">
+    <h1>Your Profile</h1>
+    <h6>Edit your personal information</h6>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-sm-12 offset-md-3 profile-div">
+      <div class="text-center">
+        <img src="{{ user.profile.image.url }}" class="rounded-circle">
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="input-label">Username:</label>
+              {{ user_form.username }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="input-label">Email:</label>
+              {{ user_form.email }}
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="input-label">First Name:</label>
+              {{ user_form.first_name }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="input-label">Last Name:</label>
+              {{ user_form.last_name }}
+            </div>
+          </div>
+        </div>
+        <label for="id_image" class="custom-file-upload">
+          <i class="fas fa-upload"></i> Select Profile Picture
+        </label>
+        <div class="image-div">
+          {{ profile_form }}
+        </div>
+        <button class="btn btn-purple text-center" type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

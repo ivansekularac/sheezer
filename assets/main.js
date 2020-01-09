@@ -9,6 +9,14 @@ window.addEventListener("load", function () {
     loader.className += " hidden";
 });
 
+// Clickable Table row
+
+jQuery(document).ready(function($) {
+    $(".clickable-tr").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+
 // Passing data-id from as Track ID that will be used for data insert
 
 $(document).on("click", "#addToPlaylistBtn", function() {

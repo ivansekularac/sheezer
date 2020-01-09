@@ -32,6 +32,7 @@ def playlists_view(request):
     if 'playlistname' in request.POST:
         playlist_name = request.POST.get('playlistname')
         Playlist.objects.create(name = playlist_name, created_by = user)
+        messages.info(request, 'Playlist has been created successfully!')
 
     return render(request, 'music/playlists.html', { 'data' : playlists })
 
@@ -133,16 +134,39 @@ def album_view(request, id):
 
     url = "https://deezerdevs-deezer.p.rapidapi.com/album/" + str(id)
     response = requests.request("GET", url, headers = headers).json()
+    
+    # Pass favorite Songs
+    user_favorite_playlist = Playlist.objects.get(name = "My Favorites", created_by = request.user)
+    favorite_songs_objs = user_favorite_playlist.songs.all()
+    favorite_songs = []
+    for song in favorite_songs_objs:
+        favorite_songs.append(int(song.api_id))
 
-    return render(request, 'music/album.html', { 'data': response })
+    return render(request, 'music/album.html', { 'data': response, 'favorite_songs': favorite_songs })
 
 # Creating album view by taking GET param as Album ID
 def artist_view(request, id):
-
+    
+    # Make API Call for particular artist ID
     url = "https://deezerdevs-deezer.p.rapidapi.com/artist/" + str(id)
     response = requests.request("GET", url, headers = headers).json()
-
-    return render(request, 'music/artist.html', { 'data': response })
+    # Make a call after for top 20 tracks for that Artist ID
+    top20_url = "https://api.deezer.com/artist/" + str(id) + "/top?limit=20"
+    top20_response = requests.request("GET", top20_url, headers = headers).json()
+    # Save all to dict for passing the data to the template
+    context = {
+        'artist': response,
+        'top20': top20_response
+    }
+    
+    # Pass favorite Songs
+    user_favorite_playlist = Playlist.objects.get(name = "My Favorites", created_by = request.user)
+    favorite_songs_objs = user_favorite_playlist.songs.all()
+    favorite_songs = []
+    for song in favorite_songs_objs:
+        favorite_songs.append(int(song.api_id))
+    
+    return render(request, 'music/artist.html', { 'data': context, 'favorite_songs': favorite_songs })
 
 # Creating view for user playlist overview
 def playlist_view(request, id):
@@ -156,7 +180,12 @@ def playlist_view(request, id):
             # Use playlist and remove song from it
             song_for_removal = playlist.songs.get(api_id = song_id)
             song_for_removal.delete()
-
+        # if there is delete in POST we delete that playlist and redirect to homepage with success message
+        elif 'delete' in request.POST:
+            playlist.delete()
+            messages.info(request, 'Playlist has been deleted successfully!')
+            return redirect('home')
+		
     # Fetch all Songs from that Playlist
     songs = playlist.songs.all()
     # For each of the ID's we need to make API Call and store that data in list as dict
@@ -171,7 +200,7 @@ def playlist_view(request, id):
         song['duration'] = durationCalc(song['duration'])
         song['rank'] = popularityCalc(song['rank'])
 
-    return render(request, 'music/playlist.html', { 'data': data })
+    return render(request, 'music/playlist.html', { 'data': data, 'playlist': playlist })
 
 
 # Creating view for favoriting Songs
