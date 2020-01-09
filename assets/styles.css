@@ -12,6 +12,7 @@
 7 - Profile Styles
 8 - Artist Profile Styles
 9 - Track Page Styles
+10 - Explore Page Styles
 
 
 ***************************************************/
@@ -697,8 +698,7 @@ nav a i {
 }
 
 /* 9 - Track Page Styles */
-
-.track {  
+.track {
   margin-top: 50px;
 }
 
@@ -714,9 +714,7 @@ nav a i {
   z-index: 1;
 }
 
-.player img {
-  
-}
+.player img {}
 
 .player:hover .mask {
   background-color: rgba(255, 255, 255, 0.1);
@@ -1308,4 +1306,36 @@ input[type="range"]:focus::-ms-fill-lower {
 
 input[type="range"]:focus::-ms-fill-upper {
   background: #f2f2f2;
+}
+
+/* 10 - Explore Page Styles */
+.top-explore {
+  margin-top: 30px;
+}
+
+.top-explore .top-title {
+  text-align: left;  
+  font-size: 18px;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.top-explore img {
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.top-explore img:hover {
+  opacity: 0.9;
+}
+
+.top-explore .carousel-indicators li {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: grey;
+}
+
+.top-explore .carousel-indicators {
+  bottom: -50px;
 }

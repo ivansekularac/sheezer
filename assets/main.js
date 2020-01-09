@@ -27,6 +27,13 @@ $('#addToPlaylistModal').on('hidden.bs.modal', function() {
 $(document).ready(function() {
   $('.alert').delay(2500).slideUp();
 });
+
+// Carousel timing
+
+$('#topExplore').carousel({
+    interval: 5000
+});
+
 // AJAX form submission for creating and adding tracks to Playlists
 
 $(document).on("submit", "#createPlaylistForm", function(e) {
@@ -231,3 +238,4 @@ audio.addEventListener("timeupdate", function() {
 Waves.init();
 Waves.attach("#play-button", ["waves-button", "waves-float"]);
 Waves.attach("#pause-button", ["waves-button", "waves-float"]);
+

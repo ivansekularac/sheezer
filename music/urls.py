@@ -13,4 +13,5 @@ urlpatterns = [
     path('track/favorited', views.favorited_view, name="favorited"),
     path('album/<int:id>/', views.album_view, name="album"),
     path('artist/<int:id>/', views.artist_view, name="artist"),
+    path('top/<int:id>/', views.top_view, name="top"),
 ]

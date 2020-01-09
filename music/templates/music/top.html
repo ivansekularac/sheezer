@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% load music_extras %}
+
+{% block title %}
+<title>{{ data.title }}</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+  <audio id="audio-player" preload="auto">
+    <source src="" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12">
+      <div class="album">
+        <img src="{{ data.picture_medium }}" />
+        <div class="row album-info">
+          <div class="col-md-3 album-release-date"></div>
+          <div class="col-md-6 album-name">{{ data.title }}</div>
+          <div class="col-md-3 album-genre"></div>
+        </div>
+        <hr />
+        <div class="album-tracks">
+          <p>Most popular tracks</p>
+          <table class="table">
+            <thead>
+              <th colspan="2"></th>
+              <th>Title</th>
+              <th>Artist</th>
+              <th>Duration</th>
+              <th>Details</th>
+            </thead>
+            {% for song in data.tracks.data %}
+            <tr>
+              <td><span class="btn play-button fas fa-play-circle" data-url="{{ song.preview }}"></span></td>
+              <td>
+                {% if song.id in favorite_songs %}
+                <span class="favorite-btn fas fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
+                {% else %}
+                <span class="favorite-btn far fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
+                {% endif %}
+              </td>
+              <td><a class="datatable-link" href="{% url 'music:track' song.id %}">{{ song.title_short }}</a></td>
+              <td><a class="datatable-link" href="{% url 'music:artist' song.artist.id %}">{{ song.artist.name }}</a></td>
+              <td>{{ song.duration|duration }}</td>
+              <td><a href="{% url 'music:track' song.id %}" target="_blank"><i class="fas fa-info-circle text-muted"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

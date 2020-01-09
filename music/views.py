@@ -43,8 +43,17 @@ def favorites_view(request):
     return render(request, 'music/favorites.html', { 'data': data })
 
 # Creating a View for Browse Page
-def explore_view(request):
+def explore_view(request):   
+    
     return render(request, 'music/explore.html')
+    
+# Creating a View for Top Deezer Playlists
+def top_view(request, id):
+    
+    url = "https://deezerdevs-deezer.p.rapidapi.com/playlist/" + str(id)
+    response = requests.request("GET", url, headers = headers).json()
+        
+    return render(request, 'music/top.html', { 'data': response })
 
 # Creating a View for Search Page
 def search_view(request):
@@ -69,7 +78,6 @@ def search_view(request):
 
             for k in response['data']:
                 data['data'].append(k)
-
 
     # Creating or adding tracks to Playlists
     if request.method == "POST":

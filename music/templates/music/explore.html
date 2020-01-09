@@ -7,7 +7,79 @@
 {% block content %}
 
 <div class="container-fluid">
-    <h1>Browse Music</h1>
+  <div class="page-header">
+    <h1>Explore Music</h1>
+    <h6>Discover and listen songs and playlists</h6>
+  </div>
+  <div class="container">
+    {{ top }}
+    <div class="row top-explore">
+      <div class="col-md-12">
+        <div id="topExplore" class="carousel slide" data-ride="carousel">
+          <p class="top-title">Top Charts by Country</p>
+          
+          <ol class="carousel-indicators">
+            <li data-target="#topExplore" data-slide-to="0" class="active"></li>
+            <li data-target="#topExplore" data-slide-to="1"></li>
+          </ol>
+
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row">
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 1266972981 %}">
+                    <img src="https://cdns-images.dzcdn.net/images/playlist/ce3680c1051e2686105f636e34f4f1cd/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 3155776842 %}">
+                    <img src="https://cdns-images.dzcdn.net/images/playlist/f1ac18441ab1dabc94282e4d1d5f4955/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 1313621735 %}">
+                    <img src="https://e-cdns-images.dzcdn.net/images/playlist/5db67fb2a5d10d69fe4780dc11b2b174/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 1111142221 %}">
+                    <img src="https://cdns-images.dzcdn.net/images/playlist/85bd6585976b8e21e0deee810ff24518/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="row">
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 1109890291 %}">
+                    <img src="https://e-cdns-images.dzcdn.net/images/playlist/b40301f3a462bcad6cc2e75937be05be/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 1116190041 %}">
+                    <img src="https://cdns-images.dzcdn.net/images/playlist/d7d7a51d0f76c9408bcdc25db433b2a5/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 1313616925 %}">
+                    <img src="https://cdns-images.dzcdn.net/images/playlist/20bfd42ca6baf8f0dc972c1c057bc099/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+                <div class="col-md-3">
+                  <a href="{% url 'music:top' 1111143121 %}">
+                    <img src="https://cdns-images.dzcdn.net/images/playlist/fbd9767ddb69cf4c43889f8e141f19b2/500x500-000000-80-0-0.jpg" alt="Image" style="max-width:100%;">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--.Carousel-->
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
