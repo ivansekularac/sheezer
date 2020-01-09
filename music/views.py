@@ -5,22 +5,13 @@ from django.db.models import Count
 from music.models import Playlist, Song
 import requests
 import json
-import datetime
+
 
 #  Headers are used in every call and they are always the same
 headers = {
     'x-rapidapi-host': "deezerdevs-deezer.p.rapidapi.com",
     'x-rapidapi-key': "3060c38672msha6ca68fb91aa196p106ce5jsn9c6ba1778834"
 }
-
-# Perform Song duration calc
-def durationCalc(duration):
-    duration = str(datetime.timedelta(seconds = duration))
-    return duration[-5:]
-
-# Perform Popularity conversion to float number
-def popularityCalc(value):
-    return str(round(int(value) / 100000, 1))
 
 # Creating a View for Playlists Page
 def playlists_view(request):
@@ -78,11 +69,6 @@ def search_view(request):
 
             for k in response['data']:
                 data['data'].append(k)
-
-    # Perform duration and popularity calc for each song
-    # for song in data['data']:
-    #     song['duration'] = durationCalc(song['duration'])
-    #     song['rank'] = popularityCalc(song['rank'])
 
 
     # Creating or adding tracks to Playlists
@@ -193,12 +179,7 @@ def playlist_view(request, id):
     for song in songs:
         url = "https://deezerdevs-deezer.p.rapidapi.com/track/" + str(song.api_id)
         response = requests.request("GET", url, headers = headers).json()
-        data.append(response)
-
-    # Perform duration and popularity calc for each song
-    for song in data:
-        song['duration'] = durationCalc(song['duration'])
-        song['rank'] = popularityCalc(song['rank'])
+        data.append(response)    
 
     return render(request, 'music/playlist.html', { 'data': data, 'playlist': playlist })
 

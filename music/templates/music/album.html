@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load music_extras %}
 
 {% block title %}
 <title>Album - {{ data.title }}</title>
@@ -43,9 +44,9 @@
                 <span class="favorite-btn far fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
                 {% endif %}
               </td>
-              <td>{{ song.title_short }}</td>
-              <td>{{ song.artist.name }}</td>
-              <td>{{ song.duration }}</td>
+              <td><a class="datatable-link" href="{% url 'music:track' song.id %}">{{ song.title_short }}</a></td>
+              <td><a class="datatable-link" href="{% url 'music:artist' song.artist.id %}">{{ song.artist.name }}</a></td>
+              <td>{{ song.duration|duration }}</td>
               <td><a href="{% url 'music:track' song.id %}" target="_blank"><i class="fas fa-info-circle text-muted"></i></a></td>
             </tr>
             {% endfor %}

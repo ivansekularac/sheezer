@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load music_extras %}
 
 {% block title %}
 <title>Playlist</title>
@@ -72,10 +73,10 @@
           <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ song.preview }}"></span>
         </td>
         <td><a class="datatable-link" href="{% url 'music:artist' song.artist.id %}">{{ song.artist.name }}</a></td>
-        <td>{{ song.title_short }}</td>
+        <td><a class="datatable-link" href="{% url 'music:track' song.id %}">{{ song.title_short }}</a></td>
         <td><a class="datatable-link" href="{% url 'music:album' song.album.id %}">{{ song.album.title }}</a></td>
-        <td>{{ song.duration }}</td>
-        <td>{{ song.rank }} / 10</td>
+        <td>{{ song.duration|duration }}</td>
+        <td>{{ song.rank|popularity }} / 10</td>
         <td class="ellipsis">
           {% if playlist.created_by == user %}
           <form action="" method="POST">

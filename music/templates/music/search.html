@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load music_extras %}
 
 {% block title %}
 <title>Search</title>
@@ -99,10 +100,10 @@
           {% endif %}
         </td>
         <td><a class="datatable-link" href="{% url 'music:artist' row.artist.id %}">{{ row.artist.name }}</a></td>
-        <td>{{ row.title_short }}</td>
+        <td><a class="datatable-link" href="{% url 'music:track' row.id %}">{{ row.title_short }}</a></td>
         <td><a class="datatable-link" href="{% url 'music:album' row.album.id %}">{{ row.album.title }}</a></td>
-        <td>{{ row.duration }}</td>
-        <td>{{ row.rank }} / 10</td>
+        <td>{{ row.duration|duration }}</td>
+        <td>{{ row.rank|popularity }} / 10</td>
         <td class="ellipsis">
           <div class="btn-group">
             <button type="button" class="btn-remove shadow" data-toggle="dropdown" aria-expanded="false">
