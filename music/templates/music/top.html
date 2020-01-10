@@ -27,8 +27,8 @@
         <div class="album-tracks">
           <p>Most popular tracks</p>
           <table class="table">
-            <thead>
-              <th colspan="2"></th>
+            <thead>              
+              <th colspan="3"></th>
               <th>Title</th>
               <th>Artist</th>
               <th>Duration</th>
@@ -36,6 +36,7 @@
             </thead>
             {% for song in data.tracks.data %}
             <tr>
+              <td><img src='{{ song.album.cover_small }}' class="cover_small"></td>
               <td><span class="btn play-button fas fa-play-circle" data-url="{{ song.preview }}"></span></td>
               <td>
                 {% if song.id in favorite_songs %}

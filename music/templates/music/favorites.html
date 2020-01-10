@@ -30,7 +30,7 @@
       <th>Popularity</th>
     </thead>
     <tbody>
-      {% for song in data %}  
+      {% for song in data %}
 
       <tr>
         <td>
@@ -38,7 +38,7 @@
           <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ song.preview }}"></span>
         </td>
         <td><a class="datatable-link" href="{% url 'music:artist' song.artist.id %}">{{ song.artist.name }}</a></td>
-        <td>{{ song.title_short }}</td>
+        <td><a class="datatable-link" href="{% url 'music:track' song.id %}">{{ song.title_short }}</a></td>
         <td><a class="datatable-link" href="{% url 'music:album' song.album.id %}">{{ song.album.title }}</a></td>
         <td>{{ song.duration|duration }}</td>
         <td>{{ song.rank|popularity }} / 10</td>        

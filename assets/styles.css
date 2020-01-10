@@ -655,6 +655,20 @@ nav a i {
   text-transform: uppercase;
 }
 
+.album .cover_small,
+.artist .cover_small {
+  height: 30px;
+  width: 30px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+.artist .table td,
+.album .table td {
+  padding: 8px;
+  vertical-align: middle;
+}
+
 .artist .artist-info .artist-albums,
 .artist .artist-info .artist-fans,
 .album .album-info .album-release-date,
