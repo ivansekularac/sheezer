@@ -24,9 +24,9 @@ $('#addToPlaylistModal').on('hidden.bs.modal', function() {
 });
 
 // Alert auto close after delay
-$(document).ready(function() {
-  $('.alert').delay(2500).slideUp();
-});
+// $(document).ready(function() {
+//   $('.alert').delay(8000).slideUp();
+// });
 
 // Carousel timing
 

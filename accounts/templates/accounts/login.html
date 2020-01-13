@@ -1,4 +1,5 @@
 {% load static from static %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,7 @@
                     <div class="login-form">
                         <form action="/accounts/login/" method="POST">
                             {% csrf_token %}
-                            {{ form }}
+                            {{ form|crispy }}
                             <input type="submit" class="btn btn-primary w-50 btn-block mt-4 float-right" value="Login">
                         </form>
                         <div class="register-forgot">

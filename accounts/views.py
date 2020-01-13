@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from .forms import UserUpdateForm, ProfileUpdateForm
+from django.contrib import messages
 
 # Creating view function for sign up page
 def signup_view(request):
@@ -12,10 +13,10 @@ def signup_view(request):
         # Validate if the form is filled properly
         if form.is_valid():
             # Saving the user and logging in after that
-            user = form.save()
-            login(request, user)
-        # After successful login we redirect user to Home page
-        return redirect('home')
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for { username }')            
+            return redirect('home')
     else:
         # If request method is not POST we just return form instance
         form = UserCreationForm()

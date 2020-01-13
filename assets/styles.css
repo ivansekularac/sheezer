@@ -89,6 +89,12 @@ form label {
   animation-fill-mode: forwards;
 }
 
+.main-alert {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}
+
 @keyframes fadeOut {
   100% {
     opacity: 0;

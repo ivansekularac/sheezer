@@ -62,6 +62,13 @@
             </div>
         </header>
        <div class="wrapper">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="main-alert alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
             {% if user.is_authenticated %}
                 {% block content %}
                 {% endblock %}
