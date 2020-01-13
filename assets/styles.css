@@ -734,7 +734,6 @@ nav a i {
   z-index: 1;
 }
 
-.player img {}
 
 .player:hover .mask {
   background-color: rgba(255, 255, 255, 0.1);
@@ -1331,9 +1330,10 @@ input[type="range"]:focus::-ms-fill-upper {
 /* 10 - Explore Page Styles */
 .top-explore {
   margin-top: 30px;
+  margin-bottom: 50px;
 }
 
-.top-explore .top-title {
+.top-title{
   text-align: left;  
   font-size: 18px;
   font-weight: 600;
@@ -1359,3 +1359,66 @@ input[type="range"]:focus::-ms-fill-upper {
 .top-explore .carousel-indicators {
   bottom: -50px;
 }
+
+.community-explore .playlist {
+  height: 140px;
+  background-color: red;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.community-explore .playlist:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.community-explore a:hover {
+  text-decoration: none;
+}
+
+.community-explore .playlist .playlist-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.community-explore .playlist .playlist-creator {
+  position: relative;
+  top: 55px;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+.community-explore > :nth-child(4n+1) .playlist {
+  background: #12c2e9;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(60deg, #f64f59, #c471ed, #12c2e9);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(60deg, #f64f59, #c471ed, #12c2e9);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.community-explore > :nth-child(4n+2) .playlist {
+  background: #00F260;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(60deg, #0575E6, #00F260);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(60deg, #0575E6, #00F260);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.community-explore > :nth-child(4n+3) .playlist {
+  background: #ff4b1f;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(60deg, #1fddff, #ff4b1f);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(60deg, #1fddff, #ff4b1f);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.community-explore > :nth-child(4n+4) .playlist {
+  background: rgb(81, 74, 157);
+  background: linear-gradient(60deg, rgba(81, 74, 157, 1) 0%, rgba(36, 198, 220, 1) 100%);
+}
+

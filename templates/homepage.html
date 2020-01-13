@@ -11,7 +11,7 @@
   <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center" {% endif %}>{{ message }}</div>
   {% endfor %}
   {% endif %}
-  <h1>Welcome, {{ user.username }}</h1>
+  <h1>Welcome, {{ user.username|capfirst }}</h1>
   <h6>You bring the passion. We bring the music.</h6>
 </div>
 {% endblock %}

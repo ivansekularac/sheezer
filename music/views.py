@@ -1,10 +1,11 @@
+import requests
+import json
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.db.models import Count
 from music.models import Playlist, Song
-import requests
-import json
+
 
 
 #  Headers are used in every call and they are always the same
@@ -17,12 +18,12 @@ headers = {
 def playlists_view(request):
     user = request.user
     # We need all playlists created by this user and song counts for which we user annotate func
-    playlists = Playlist.objects.filter(created_by = user).annotate(songs_count = Count('songs'))
+    playlists = Playlist.objects.filter(created_by=user).annotate(songs_count=Count('songs'))
 
     # If there is a POST method request we create new playlists
     if 'playlistname' in request.POST:
         playlist_name = request.POST.get('playlistname')
-        Playlist.objects.create(name = playlist_name, created_by = user)
+        Playlist.objects.create(name=playlist_name, created_by=user)
         messages.info(request, 'Playlist has been created successfully!')
 
     return render(request, 'music/playlists.html', { 'data' : playlists })
@@ -31,7 +32,7 @@ def playlists_view(request):
 def favorites_view(request):
     data = []
     # Check if Playlist for My Favorite exists and if not create one
-    my_favorites = Playlist.objects.get(name = 'My Favorites', created_by = request.user)
+    my_favorites = Playlist.objects.get(name='My Favorites', created_by=request.user)
     # Fetch all TrackID's
     songs = my_favorites.songs.all()
     # For each of the ID's we need to make API Call and store that data in list as dict
@@ -43,15 +44,17 @@ def favorites_view(request):
     return render(request, 'music/favorites.html', { 'data': data })
 
 # Creating a View for Browse Page
-def explore_view(request):   
-    
-    return render(request, 'music/explore.html')
+def explore_view(request):
+    # Select only playlist excluding My Favorites ordered by date of creation
+    last_four = Playlist.objects.order_by('creation_date').exclude(name='My Favorites')[:4]
+
+    return render(request, 'music/explore.html', { 'data': last_four })
     
 # Creating a View for Top Deezer Playlists
 def top_view(request, id):
     
     url = "https://deezerdevs-deezer.p.rapidapi.com/playlist/" + str(id)
-    response = requests.request("GET", url, headers = headers).json()
+    response = requests.request("GET", url, headers=headers).json()
         
     return render(request, 'music/top.html', { 'data': response })
 
@@ -65,7 +68,7 @@ def search_view(request):
         url = "https://deezerdevs-deezer.p.rapidapi.com/search"
         querystring = {"q": query}
 
-        response = requests.request("GET", url, headers = headers, params = querystring).json()
+        response = requests.request("GET", url, headers=headers, params=querystring).json()
         data.update(response)
 
         # We need all results since there is 25 per call, we iterate until we got all of them in data dict
@@ -85,7 +88,7 @@ def search_view(request):
         if 'playlistname' in request.POST:
             user = request.user
             playlist_name = request.POST.get('playlistname')
-            Playlist.objects.create(name = playlist_name, created_by = user)
+            Playlist.objects.create(name=playlist_name, created_by=user)
             messages.success(request, 'Playlist has been created successfully!')
         elif 'trackid' in request.POST:
             # If user wants to add a track to existing playlist
@@ -93,7 +96,7 @@ def search_view(request):
             # Get selected playlist ID
             playlist_id = request.POST.get('playlistid')
             # Find object with that id and save it
-            playlist_obj = Playlist.objects.get(id = playlist_id)
+            playlist_obj = Playlist.objects.get(id=playlist_id)
             playlist_obj.save()
             # Get track ID and create Song object
             song_id = request.POST.get('trackid')
@@ -104,9 +107,9 @@ def search_view(request):
 
 
     # Fetch all User's Playlists for populating Add To feature
-    user_playlists = Playlist.objects.filter(created_by = request.user)
+    user_playlists = Playlist.objects.filter(created_by=request.user)
     # Pass favorite Songs
-    user_favorite_playlist = Playlist.objects.get(name = "My Favorites", created_by = request.user)
+    user_favorite_playlist = Playlist.objects.get(name='My Favorites', created_by=request.user)
     favorite_songs_objs = user_favorite_playlist.songs.all()
     favorite_songs = []
     for song in favorite_songs_objs:
@@ -119,7 +122,7 @@ def search_view(request):
 def track_view(request, id):
 
     url = "https://deezerdevs-deezer.p.rapidapi.com/track/" + str(id)
-    response = requests.request("GET", url, headers = headers).json()
+    response = requests.request("GET", url, headers=headers).json()
 
     return render(request, 'music/track.html', { 'data': response })
 
@@ -127,10 +130,10 @@ def track_view(request, id):
 def album_view(request, id):
 
     url = "https://deezerdevs-deezer.p.rapidapi.com/album/" + str(id)
-    response = requests.request("GET", url, headers = headers).json()
+    response = requests.request("GET", url, headers=headers).json()
     
     # Pass favorite Songs
-    user_favorite_playlist = Playlist.objects.get(name = "My Favorites", created_by = request.user)
+    user_favorite_playlist = Playlist.objects.get(name='My Favorites', created_by=request.user)
     favorite_songs_objs = user_favorite_playlist.songs.all()
     favorite_songs = []
     for song in favorite_songs_objs:
@@ -143,10 +146,10 @@ def artist_view(request, id):
     
     # Make API Call for particular artist ID
     url = "https://deezerdevs-deezer.p.rapidapi.com/artist/" + str(id)
-    response = requests.request("GET", url, headers = headers).json()
+    response = requests.request("GET", url, headers=headers).json()
     # Make a call after for top 20 tracks for that Artist ID
     top20_url = "https://api.deezer.com/artist/" + str(id) + "/top?limit=20"
-    top20_response = requests.request("GET", top20_url, headers = headers).json()
+    top20_response = requests.request("GET", top20_url, headers=headers).json()
     # Save all to dict for passing the data to the template
     context = {
         'artist': response,
@@ -154,7 +157,7 @@ def artist_view(request, id):
     }
     
     # Pass favorite Songs
-    user_favorite_playlist = Playlist.objects.get(name = "My Favorites", created_by = request.user)
+    user_favorite_playlist = Playlist.objects.get(name='My Favorites', created_by=request.user)
     favorite_songs_objs = user_favorite_playlist.songs.all()
     favorite_songs = []
     for song in favorite_songs_objs:
@@ -165,14 +168,14 @@ def artist_view(request, id):
 # Creating view for user playlist overview
 def playlist_view(request, id):
     # Get Playlist with id passed
-    playlist = Playlist.objects.get(id = id)
+    playlist = Playlist.objects.get(id=id)
 
     # If there is POST request that means we are sending data for removing song from playlist
     if request.method == "POST":
         if 'song_id' in request.POST:
             song_id = request.POST.get('song_id')
             # Use playlist and remove song from it
-            song_for_removal = playlist.songs.get(api_id = song_id)
+            song_for_removal = playlist.songs.get(api_id=song_id)
             song_for_removal.delete()
         # if there is delete in POST we delete that playlist and redirect to homepage with success message
         elif 'delete' in request.POST:
@@ -186,7 +189,7 @@ def playlist_view(request, id):
     data = []
     for song in songs:
         url = "https://deezerdevs-deezer.p.rapidapi.com/track/" + str(song.api_id)
-        response = requests.request("GET", url, headers = headers).json()
+        response = requests.request("GET", url, headers=headers).json()
         data.append(response)    
 
     return render(request, 'music/playlist.html', { 'data': data, 'playlist': playlist })
@@ -203,19 +206,19 @@ def favorited_view(request):
         #song_obj = Song.objects.create(api_id = song_id)
         # song_obj.save()
         # Add this song to users My Favorite Playlists
-        playlist_obj = Playlist.objects.get(name = 'My Favorites', created_by = request.user)
+        playlist_obj = Playlist.objects.get(name='My Favorites', created_by=request.user)
         playlist_obj.save()
 
         # Check if song is in playlist or no:
-        is_favorited = playlist_obj.songs.filter(api_id = song_id)
+        is_favorited = playlist_obj.songs.filter(api_id=song_id)
 
         if len(is_favorited) > 0:
             # Remove song from playlist because it's already in it
-            unvaforited_song = playlist_obj.songs.get(api_id = song_id)
+            unvaforited_song = playlist_obj.songs.get(api_id=song_id)
             unvaforited_song.delete()
         else:
             # Add song to this playlists because it's not in it already
-            song_obj = Song.objects.create(api_id = song_id)
+            song_obj = Song.objects.create(api_id=song_id)
             song_obj.save()
             playlist_obj.songs.add(song_obj)
 

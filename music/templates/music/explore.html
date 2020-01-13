@@ -79,6 +79,21 @@
         <!--.Carousel-->
       </div>
     </div>
+    <p class="top-title">Latest by Community</p>
+    <div class="row community-explore">
+
+      {% for playlist in data %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mt-3">
+          <a href="{% url 'music:playlist' playlist.id %}">
+          <div class="playlist">
+            <div class="playlist-name">{{ playlist.name }}</div>
+            <div class="playlist-creator">created by {{ playlist.created_by }}</div>
+          </div>
+          </a>
+        </div>
+      {% endfor %}
+        
+    </div>
   </div>
 </div>
 
