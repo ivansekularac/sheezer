@@ -92,7 +92,17 @@
           </a>
         </div>
       {% endfor %}
-        
+    </div>
+      <p class="top-title">Most Popular by Users Choice</p>
+      <div class="row most-popular-explore justify-content-between">
+      {% for t in most_popular %}
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">
+          <a href="{% url 'music:track' t.id %}" target="_blank"><img src="{{ t.album.cover }}" class="song-cover"></a>      
+          <p class="artist-name">{{ t.artist.name }}</p>
+          <p class="song-title">{{ t.title_short }}</p>
+        </div>
+      {% endfor %}
+    </div>
     </div>
   </div>
 </div>

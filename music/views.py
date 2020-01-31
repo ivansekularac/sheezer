@@ -46,15 +46,27 @@ def favorites_view(request):
 # Creating a View for Browse Page
 def explore_view(request):
     # Select only playlist excluding My Favorites ordered by date of creation
-    last_four = Playlist.objects.order_by('creation_date').exclude(name='My Favorites')[:4]
+    last_four = Playlist.objects.order_by('-creation_date').exclude(name='My Favorites')[:4]
 
-    return render(request, 'music/explore.html', { 'data': last_four })
+    # Fetch most popular songs by users based on in how many playlist song has been added
+    most_popular = Song.objects.all().annotate(count=Count('playlist')).order_by('-count')[:6]
+    # For each of the songs we need to make api call and return the data 
+    popular_data = []
+
+    for song in most_popular:
+        url = "https://deezerdevs-deezer.p.rapidapi.com/track/" + str(song.api_id)
+        response = requests.request("GET", url, headers=headers).json()
+        popular_data.append(response)
+
+
+
+    return render(request, 'music/explore.html', { 'data': last_four, 'most_popular': popular_data })
     
 # Creating a View for Top Deezer Playlists
 def top_view(request, id):
     
     url = "https://deezerdevs-deezer.p.rapidapi.com/playlist/" + str(id)
-    response = requests.request("GET", url, headers=headers).json()
+    response = requests.request("GET", url, headers=headers).json()    
         
     return render(request, 'music/top.html', { 'data': response })
 
@@ -203,7 +215,7 @@ def favorited_view(request):
         # Save sent id
         song_id = request.POST.get('song_id')
         # Create song object
-        #song_obj = Song.objects.create(api_id = song_id)
+        # song_obj = Song.objects.create(api_id = song_id)
         # song_obj.save()
         # Add this song to users My Favorite Playlists
         playlist_obj = Playlist.objects.get(name='My Favorites', created_by=request.user)
@@ -218,8 +230,14 @@ def favorited_view(request):
             unvaforited_song.delete()
         else:
             # Add song to this playlists because it's not in it already
-            song_obj = Song.objects.create(api_id=song_id)
-            song_obj.save()
+            # First see if the song is already in db
+            song_search = Song.objects.filter(api_id=song_id)
+            if len(song_search) == 0:
+                song_obj = Song.objects.create(api_id=song_id)
+                song_obj.save()
+            else:
+                song_obj = Song.objects.get(api_id=song_id)
+                
             playlist_obj.songs.add(song_obj)
 
     return HttpResponse('Favorited! <3')

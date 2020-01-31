@@ -102,6 +102,7 @@ form label {
   }
 }
 
+
 /* 2 - Login and Signup page styles */
 .helptext {
   font-size: 12px;
@@ -1356,6 +1357,10 @@ input[type="range"]:focus::-ms-fill-upper {
   background-color: grey;
 }
 
+.community-explore {
+  margin-bottom: 50px;
+}
+
 .top-explore .carousel-indicators {
   bottom: -50px;
 }
@@ -1390,6 +1395,7 @@ input[type="range"]:focus::-ms-fill-upper {
   opacity: 0.5;
 }
 
+
 .community-explore > :nth-child(4n+1) .playlist {
   background: #12c2e9;
   /* fallback for old browsers */
@@ -1421,4 +1427,34 @@ input[type="range"]:focus::-ms-fill-upper {
   background: rgb(81, 74, 157);
   background: linear-gradient(60deg, rgba(81, 74, 157, 1) 0%, rgba(36, 198, 220, 1) 100%);
 }
+
+.most-popular-explore {
+
+  margin-top: 30px;
+  text-align: center;
+
+}
+
+.most-popular-explore .song-cover {
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.most-popular-explore .song-cover:hover {
+  opacity: 0.8;
+}
+
+
+.most-popular-explore .song-title {
+  font-size: 12px;
+  color: #555;
+  margin-top: -17px;
+}
+
+.most-popular-explore .artist-name {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
 
