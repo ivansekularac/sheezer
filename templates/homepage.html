@@ -5,12 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="homepage-container">
-  {% if messages %}
-  {% for message in messages %}
-  <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center" {% endif %}>{{ message }}</div>
-  {% endfor %}
-  {% endif %}
+<div class="homepage-container">  
   <h1>Welcome, {{ user.username|capfirst }}</h1>
   <h6>You bring the passion. We bring the music.</h6>
 </div>

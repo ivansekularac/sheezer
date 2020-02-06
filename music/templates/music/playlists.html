@@ -43,12 +43,7 @@
     </div>
   </div>
   {{ count }}
-  <div class="container">
-    {% if messages %}
-    {% for message in messages %}
-    <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center" {% endif %}>{{ message }}</div>
-    {% endfor %}
-    {% endif %}
+  <div class="container">     
     <div class="row playlists-row">
       {% if data|length > 0 %}
       {% for playlist in data %}

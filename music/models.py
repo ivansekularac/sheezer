@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
 from django.contrib.auth.models import User
+import requests
 import datetime
 
 # Model for Playlists created by Users
@@ -129,3 +130,39 @@ class Explore:
         return Song.objects.all().annotate(count=Count('playlist')).order_by('-count')[:6]
 
     
+
+class Deezer:
+
+    __headers = {
+    'x-rapidapi-host': "deezerdevs-deezer.p.rapidapi.com",
+    'x-rapidapi-key': "3060c38672msha6ca68fb91aa196p106ce5jsn9c6ba1778834"
+    }
+
+    @staticmethod
+    def call(url, id=None, query=None, endstring=None):
+        """Method for calling Deezer API and returning response
+            @url = API url - mandatory
+            @id = param for single items like track, album, artist
+            @query = query string used for keyword search, goes without ID
+            @endstring = used in combination with @id param for passing additional info like limit20
+        """
+        if id and endstring:
+            url = url + str(id) + endstring
+            response = requests.request("GET", url, headers=Deezer.__headers).json()
+        elif id:
+            url = url + str(id)
+            response = requests.request("GET", url, headers=Deezer.__headers).json()
+        elif query:
+            response = requests.request("GET", url, headers=Deezer.__headers, params=query).json()      
+        
+        return response
+
+    @staticmethod
+    def multi_calls(songs):
+        """Method for returning multiple api call results, used for songs primarily"""
+        data = []
+        for song in songs:
+            response = Deezer.call('https://deezerdevs-deezer.p.rapidapi.com/track/', id=song.api_id)
+            data.append(response)
+
+        return data

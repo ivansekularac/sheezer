@@ -40,9 +40,9 @@
               <td><span class="btn play-button fas fa-play-circle" data-url="{{ song.preview }}"></span></td>
               <td>
                 {% if song.id in favorite_songs %}
-                <span class="favorite-btn fas fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
+                <span class="fav-song fas fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
                 {% else %}
-                <span class="favorite-btn far fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
+                <span class="fav-song far fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
                 {% endif %}
               </td>
               <td><a class="datatable-link" href="{% url 'music:track' song.id %}">{{ song.title_short }}</a></td>

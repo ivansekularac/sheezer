@@ -17,7 +17,7 @@
   <audio id="audio-player" preload="auto">
     <source src="" type="audio/mpeg">
     Your browser does not support the audio element.
-  </audio>  
+  </audio>
 
   {% if data|length > 0 %}
   <table id="datatable" class="table table-hover">
@@ -28,6 +28,7 @@
       <th>Album</th>
       <th>Duration</th>
       <th>Popularity</th>
+      <th></th>
     </thead>
     <tbody>
       {% for song in data %}
@@ -41,7 +42,14 @@
         <td><a class="datatable-link" href="{% url 'music:track' song.id %}">{{ song.title_short }}</a></td>
         <td><a class="datatable-link" href="{% url 'music:album' song.album.id %}">{{ song.album.title }}</a></td>
         <td>{{ song.duration|duration }}</td>
-        <td>{{ song.rank|popularity }} / 10</td>        
+        <td>{{ song.rank|popularity }} / 10</td>
+        <td class="ellipsis">          
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{ song.id }}" name="song_id" />
+            <button type="submit" class="btn-remove shadow"><i class="fas fa-heart-broken"></i></button>
+          </form>
+        </td>       
       </tr>
 
       {% endfor %}

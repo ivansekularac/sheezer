@@ -114,8 +114,7 @@ $(document).ready(function() {
 // Favorite Song Functionality
 
 $(document).ready(function() {
-
-  $('.favorite-btn').on('click', function() {
+  $('#datatable').on('click', '.favorite-btn', function() {
     $.ajax({
       type: 'POST',
       url: '/music/track/favorited',
@@ -133,7 +132,29 @@ $(document).ready(function() {
     } else {
       $(this).removeClass('fas').addClass('far');
     }
+  });
+});
 
+
+$(document).ready(function() {
+  $('.fav-song').on('click', function() {
+    $.ajax({
+      type: 'POST',
+      url: '/music/track/favorited',
+      data: {
+        song_id: $(this).data('id'),
+        csrfmiddlewaretoken: $(this).data('token')
+      },
+      success: function() {
+        console.log('Yey!');
+      }
+    });
+
+    if ($(this).hasClass('far')) {
+      $(this).removeClass('far').addClass('fas');
+    } else {
+      $(this).removeClass('fas').addClass('far');
+    }
   });
 });
 
