@@ -7,6 +7,66 @@
 
 {% block content %}
 
+<!-- Create New Playlist Modal Window -->
+
+<div class="modal fade" id="createPlaylistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create New Playlist</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="createPlaylistForm" action="" method="POST">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input type="hidden" value="{{ user.get_username }}" name="username">
+          <div class="form-group">
+            <label class="input-label">Playlist Name</label>
+            <input type="text" class="form-control" name="playlistname" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add to Playlist Modal -->
+
+<div class="modal fade" id="addToPlaylistModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add to Playlist</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" method="POST" id="addToPlaylistForm">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input type="hidden" id="trackID" name="trackid">
+          <select class="form-control" id="playlistid" required>
+            <option selected disabled>Select Playlist</option>
+            {% for playlist in user_playlists|slice:"1:" %}
+            <option value="{{ playlist.id }}">{{ playlist.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-purple">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid">
 
   <audio id="audio-player" preload="auto">

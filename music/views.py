@@ -138,7 +138,7 @@ def playlist_view(request, id):
         elif 'delete' in request.POST:
             Playlist.delete_playlist(id)
             messages.info(request, 'Playlist has been deleted successfully!')
-            return redirect('home')
+            return redirect('/music/playlists/')
 
     playlist = Playlist.objects.get(id=id)
     # Fetch all Songs from that Playlist
