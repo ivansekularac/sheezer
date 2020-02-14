@@ -23,12 +23,12 @@
   <table id="datatable" class="table table-hover">
     <thead>
       <th>Preview</th>
+      <th></th>
       <th>Artist</th>
       <th>Song</th>
       <th>Album</th>
       <th>Duration</th>
       <th>Popularity</th>
-      <th></th>
     </thead>
     <tbody>
       {% for song in data %}
@@ -36,20 +36,16 @@
       <tr>
         <td>
           <img src="{{ song.album.cover_small }}" class="song-image">
-          <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ song.preview }}"></span>
+          <span class="btn btn-primary play-button fas fa-play-circle" data-url="{{ song.preview }}"></span>          
+        </td>
+        <td>
+          <span class="favorite-btn fas fa-heart" data-id="{{ song.id }}" data-token="{{ csrf_token }}"></span>
         </td>
         <td><a class="datatable-link" href="{% url 'music:artist' song.artist.id %}">{{ song.artist.name }}</a></td>
         <td><a class="datatable-link" href="{% url 'music:track' song.id %}">{{ song.title_short }}</a></td>
         <td><a class="datatable-link" href="{% url 'music:album' song.album.id %}">{{ song.album.title }}</a></td>
         <td>{{ song.duration|duration }}</td>
-        <td>{{ song.rank|popularity }} / 10</td>
-        <td class="ellipsis">          
-          <form action="" method="POST">
-            {% csrf_token %}
-            <input type="hidden" value="{{ song.id }}" name="song_id" />
-            <button type="submit" class="btn-remove shadow"><i class="fas fa-heart-broken"></i></button>
-          </form>
-        </td>       
+        <td>{{ song.rank|popularity }} / 10</td>             
       </tr>
 
       {% endfor %}

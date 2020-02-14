@@ -722,7 +722,7 @@ nav a i {
 
 /* 9 - Track Page Styles */
 .track {
-  margin-top: 50px;
+  margin-top: 50px;  
 }
 
 .player {
@@ -1329,6 +1329,8 @@ input[type="range"]:focus::-ms-fill-lower {
 input[type="range"]:focus::-ms-fill-upper {
   background: #f2f2f2;
 }
+
+
 
 /* 10 - Explore Page Styles */
 .top-explore {
