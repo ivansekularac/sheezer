@@ -4,7 +4,12 @@
 Sheezer is made using Django Framework and Deezer API. 
 Allows user to sign up, search, listen previews of songs and create their own playlists
 
-Project dependencies are in requirements.txt file
+# Installation
+Create new virtual environment using Anaconda, VirtualEnv or other.
+Install project dependencies from requirements.txt
+```python
+pip install requirements.txt
+```  
 
 In order to run navigate to root project folder and run command:
 ```python
