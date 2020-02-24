@@ -46,7 +46,7 @@ class Playlist(models.Model):
 # we need to store api_id for particualar song so we can perform some actions later
 # it's primary key since we don't want multiple rows for same songs
 
-class Song(models.Model):
+class Song(models.Model):    
     api_id = models.CharField(max_length = 100, primary_key = True)
 
     def __str__(self):
